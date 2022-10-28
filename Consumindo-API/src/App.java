@@ -24,35 +24,30 @@ public class App {
         var response = client.send(request, BodyHandlers.ofString());
 
         //Parse Json
-        String jsonMoviesFull = response.body();
-        jsonMoviesFull = jsonMoviesFull.replace("\"", " ");
-        String[] jsonMovies = jsonMoviesFull.split("\\},\\{");
-        
-        List<String> titlesList = parseTitles(jsonMovies);
-        List<String> yearsList = parseYear(jsonMovies);
+        String jsonMoviesFull = response.body().replace("\"", " ");
+        String[] jsonMovies = jsonMoviesFull.split("\\},\\{"); // array which every position it's a movie
 
-        titlesList.forEach(System.out::println);
-        yearsList.forEach(System.out::println);
+        List<Movies> movies = moviesList(jsonMovies);
+
+        movies.forEach( movie -> System.out.println(movie.title().toString()));
     }
 
-    //PARSE METHODS -------------------------------------------
-    public static List<String> parseTitles(String[] json){
-        List<String> titlesList = new ArrayList<>();
-        String[] atributos = new String[8]; //total of attributes
-        for(int i = 0; i< json.length; i++){
-            atributos = json[i].split(",");
-            titlesList.add(atributos[AttributesEnum.TITLE.getPosition()]);
+    //Parse method
+    public static List<Movies> moviesList(String[] jsonMovies){
+        List<Movies> listMovies = new ArrayList<>();
+        String[] attributes;
+        Movies movie;
+
+        for(int i =0; i < jsonMovies.length; i++){
+            attributes = jsonMovies[i].split(",");
+            movie = new Movies(attributes[AttributesEnum.TITLE.getPosition()], 
+                            attributes[AttributesEnum.IMAGE.getPosition()], 
+                            attributes[AttributesEnum.IMDB_RANKING.getPosition()], 
+                            attributes[AttributesEnum.YEAR.getPosition()]);
+
+            listMovies.add(movie);
         }
-        return titlesList;
-    }
-    
-    public static List<String> parseYear(String[] json){
-        List<String> titlesList = new ArrayList<>();
-        String[] atributos = new String[8]; //total of attributes
-        for(int i = 0; i< json.length; i++){
-            atributos = json[i].split(",");
-            titlesList.add(atributos[AttributesEnum.YEAR.getPosition()]);
-        }
-        return titlesList;
+
+        return listMovies;
     }
 }
