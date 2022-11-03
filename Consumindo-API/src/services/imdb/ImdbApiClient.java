@@ -1,4 +1,4 @@
-package services;
+package services.imdb;
 
 import java.io.IOException;
 import java.net.URI;
@@ -6,7 +6,9 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse.BodyHandlers;
 
-public class ImdbApiClient {
+import services.ApiClient;
+
+public class ImdbApiClient implements ApiClient{
     
     private static String linkApi =  "https://imdb-api.com/en/API/Top250Movies/";
     private static URI UriApi;

@@ -3,7 +3,7 @@ import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.List;
 
-import entities.Movies;
+import entities.Content;
 
 public class HTMLGenerator {
     
@@ -20,7 +20,7 @@ public class HTMLGenerator {
 
 
     //unique methods
-    public void generate(List<Movies> moviesList){
+    public void generate(List<? extends Content> contentList){
         //make a writer to write into html file
         PrintWriter output = new PrintWriter(file, true);
 
@@ -29,13 +29,13 @@ public class HTMLGenerator {
 
         """);
         
-        for(Movies movie : moviesList){
+        for(Content content : contentList){
             // write the title
-            output.write(title(movie));
+            output.write(title(content));
             // show the image
-            output.write(image(movie));
+            output.write(image(content));
             // write the description (rating and year)
-            output.write(description(movie));
+            output.write(description(content));
 
         }            
         output.write("""
@@ -47,30 +47,30 @@ public class HTMLGenerator {
 
 
     // Aux methods
-    private String title(Movies movie){
+    private String title(Content content){
         String title = """
                     <h3>
-                    """ + movie.title() + """
+                    """ + content.title() + """
                     </h3>
                     
                     """;
         return title;
     }
 
-    private String image(Movies movie){
+    private String image(Content content){
         String image = """
             <img src="
-            """ + movie.urlImage() +"""
+            """ + content.urlImage() +"""
                 " style="height: 40%">
 
             """;
         return image;
     }
 
-    private String description(Movies movie){
+    private String description(Content content){
         String description = """
                 <p> Nota: 
-                """ + movie.rating() + " - Ano: " + movie.year() + "</p>" + """
+                """ + content.rating() + " - Ano: " + content.year() + "</p>" + """
                         
                         """;
         return description;

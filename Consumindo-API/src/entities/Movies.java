@@ -1,2 +1,2 @@
 package entities;
-public record Movies(String title, String urlImage, String rating, String year) {}
+public record Movies(String title, String urlImage, String rating, String year) implements Content{}

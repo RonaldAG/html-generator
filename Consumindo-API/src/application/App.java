@@ -5,8 +5,8 @@ import java.util.List;
 
 import entities.Movies;
 import services.HTMLGenerator;
-import services.ImdbApiClient;
-import services.ImdbMovieJsonParser;
+import services.imdb.ImdbApiClient;
+import services.imdb.ImdbMovieJsonParser;
 public class App {
     public static void main(String[] args){
         //Get uri
@@ -21,8 +21,8 @@ public class App {
 
             //Write the content in the file 
             FileWriter file = new FileWriter("index.html");
-            HTMLGenerator htmlGenerator = new HTMLGenerator(file);
-            htmlGenerator.generate(movies);   
+            new HTMLGenerator(file).generate(movies);   
+            file.close();
             
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();

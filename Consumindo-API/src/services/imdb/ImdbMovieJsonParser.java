@@ -1,11 +1,13 @@
-package services;
+package services.imdb;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import entities.Movies;
+import services.AttributesEnum;
+import services.JsonParser;
 
-public class ImdbMovieJsonParser {
+public class ImdbMovieJsonParser implements JsonParser{
     private String json;
 
     public ImdbMovieJsonParser(String json){
