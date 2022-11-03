@@ -1,4 +1,5 @@
 import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -9,34 +10,22 @@ import java.util.List;
 import entities.Movies;
 import services.AttributesEnum;
 import services.HTMLGenerator;
+import services.ImdbApiClient;
 public class App {
     public static void main(String[] args){
         //Get uri
-        String imdb250Movies = "https://imdb-api.com/en/API/Top250Movies/k_f360sfvm";
-        var link = URI.create(imdb250Movies);
-
-        // create a client
-        var client = HttpClient.newHttpClient();
-
-        // make a request http
-        var request = HttpRequest.newBuilder()
-            .uri(link)
-            .build();
-
-        try{
-            //use the client to send the request and print the body
-            var response = client.send(request, BodyHandlers.ofString());
-        
-            //Parse Json
-            String jsonMoviesFull = response.body();
-            List<Movies> movies = parseJsonMovies(jsonMoviesFull);
+        String apiKey = "k_f360sfvm";
+        String json;
+        try {
+            json = new ImdbApiClient(apiKey).getBody();
+            List<Movies> movies = parseJsonMovies(json);
 
             //Write the images in the file 
             FileWriter file = new FileWriter("index.html");
             HTMLGenerator htmlGenerator = new HTMLGenerator(file);
             htmlGenerator.generate(movies);   
-        
-        } catch (Exception e) {
+            
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }

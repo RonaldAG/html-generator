@@ -61,7 +61,7 @@ public class HTMLGenerator {
         String image = """
             <img src="
             """ + movie.urlImage() +"""
-                ">
+                " style="height: 40%">
 
             """;
         return image;
