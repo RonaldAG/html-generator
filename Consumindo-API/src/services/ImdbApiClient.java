@@ -8,10 +8,10 @@ import java.net.http.HttpResponse.BodyHandlers;
 
 public class ImdbApiClient {
     
-    private String linkApi =  "https://imdb-api.com/en/API/Top250Movies/";
+    private static String linkApi =  "https://imdb-api.com/en/API/Top250Movies/";
     private static URI UriApi;
-    private HttpClient client;
-    private HttpRequest request;
+    private static HttpClient client;
+    private static HttpRequest request;
     private String key;
 
 
